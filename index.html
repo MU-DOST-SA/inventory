@@ -6,43 +6,117 @@
     <title>Inventory Table</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+      :root {
+        --blue: #1a237e;
+        --blue-light: #f4f6fb;
+        --blue-dark: #0d1333;
+        --gold: #ffc107;
+        --gold-dark: #b28704;
+        --border: #e3e6ee;
+        --shadow: 0 2px 8px rgba(26, 35, 126, 0.06);
+      }
       body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f8f9fa;
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        background: var(--blue-light);
+        min-height: 100vh;
       }
       h1 {
         text-align: center;
+        color: var(--blue-dark);
+        margin-top: 36px;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        font-size: 2.2em;
       }
       .search-container {
-        text-align: center;
-        margin-bottom: 20px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #fff;
+        border-bottom: 1.5px solid var(--border);
+        padding: 18px 0 18px 0;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 36px;
       }
-      input[type="text"] {
-        width: 50%;
-        padding: 8px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+      .search-container input[type="text"] {
+        width: 40vw;
+        min-width: 220px;
+        max-width: 500px;
+        padding: 12px 18px;
+        font-size: 18px;
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        outline: none;
+        background: #f9fafc;
+        color: var(--blue-dark);
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-shadow: none;
+      }
+      .search-container input[type="text"]:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 2px var(--blue-light);
       }
       table {
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
         width: 100%;
-        background: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background: #fff;
+        box-shadow: var(--shadow);
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 0 auto 36px auto;
+        border: 1.5px solid var(--border);
       }
       th,
       td {
-        border: 1px solid #ddd;
-        padding: 10px;
+        padding: 14px 12px;
         text-align: left;
       }
       th {
-        background-color: #007bff;
-        color: white;
+        background: #f5f7fa;
+        color: var(--blue-dark);
+        font-size: 1.08em;
+        font-weight: 600;
+        border-bottom: 2px solid var(--gold);
+        letter-spacing: 0.5px;
       }
-      tr:nth-child(even) {
-        background-color: #f2f2f2;
+      tr:nth-child(even) td {
+        background-color: #f8fafc;
+      }
+      tr:hover td {
+        background: #e9f0fa;
+        transition: background 0.18s;
+      }
+      td {
+        border-bottom: 1px solid var(--border);
+        font-size: 1em;
+      }
+      td:last-child,
+      th:last-child {
+        border-right: none;
+      }
+      td:first-child,
+      th:first-child {
+        border-left: none;
+      }
+      @media (max-width: 700px) {
+        .search-container input[type="text"] {
+          width: 90vw;
+        }
+        table,
+        th,
+        td {
+          font-size: 0.95em;
+        }
+        th,
+        td {
+          padding: 10px 6px;
+        }
       }
     </style>
   </head>
@@ -54,6 +128,8 @@
         type="text"
         id="searchInput"
         placeholder="Search by name or category..."
+        aria-label="Search inventory"
+        autocomplete="off"
       />
     </div>
 
